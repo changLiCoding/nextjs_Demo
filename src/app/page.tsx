@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { prisma } from "@/db";
+import { redirect } from "next/navigation";
 
 import getTodos from "@/utils/getTodos";
 import TodoItem from "@/components/TodoItem";
+import { revalidatePath } from "next/cache";
 // import useGetTodos from "@/hooks/useGetTodos";
 
 async function toggleTodo(id: string, completed: boolean): Promise<void> {
@@ -11,6 +13,8 @@ async function toggleTodo(id: string, completed: boolean): Promise<void> {
 		where: { id },
 		data: { completed },
 	});
+
+	revalidatePath("/");
 }
 
 export default async function Home() {
