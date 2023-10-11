@@ -10,9 +10,9 @@ export default async function handleAddTodo(data: FormData) {
 		throw new Error("Title is required");
 	}
 
-	await prisma.todo.create({
+	const res = await prisma.todo.create({
 		data: { title, completed: false },
 	});
-	console.log("Hello World");
+	console.log(res);
 	redirect("/");
 }
