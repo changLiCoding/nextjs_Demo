@@ -1,12 +1,19 @@
+"use client";
 type TodoItemProps = {
 	title: string;
 	completed: boolean;
 	id: string;
 	updatedAt: Date;
 	createdAt: Date;
+	toggleTodo: (id: string, completed: boolean) => void;
 };
 
-export default function TodoItem({ title, completed, id }: TodoItemProps) {
+export default function TodoItem({
+	title,
+	completed,
+	id,
+	toggleTodo,
+}: TodoItemProps) {
 	return (
 		<li
 			key={id}
@@ -15,6 +22,10 @@ export default function TodoItem({ title, completed, id }: TodoItemProps) {
 				className='cursor-pointer peer'
 				type='checkbox'
 				id={id}
+				defaultChecked={completed}
+				onChange={(e) => {
+					toggleTodo(id, e.target.checked);
+				}}
 			/>
 			<label
 				htmlFor={id}

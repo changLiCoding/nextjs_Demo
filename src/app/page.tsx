@@ -1,9 +1,17 @@
 import Link from "next/link";
-// import { prisma } from "@/db";
+import { prisma } from "@/db";
 
 import getTodos from "@/utils/getTodos";
 import TodoItem from "@/components/TodoItem";
 // import useGetTodos from "@/hooks/useGetTodos";
+
+async function toggleTodo(id: string, completed: boolean): Promise<void> {
+	"use server";
+	await prisma.todo.update({
+		where: { id },
+		data: { completed },
+	});
+}
 
 export default async function Home() {
 	// const { todos } = useGetTodos();
@@ -33,6 +41,7 @@ export default async function Home() {
 						<TodoItem
 							key={todo.id}
 							{...todo}
+							toggleTodo={toggleTodo}
 						/>
 					))}
 				</ul>
